@@ -4,12 +4,9 @@ import Image from 'next/image'
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Background texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.03)_0%,_transparent_70%)]" />
-
       {/* Grid pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage:
             'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
@@ -17,22 +14,34 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 text-center px-4 animate-slide-up">
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <div className="relative h-28 w-28 sm:h-36 sm:w-36">
-            <Image
-              src="/logo.jpg"
-              alt="HAVOK"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
+      {/* Looming logo — sits behind everything, bleeds to edges */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <div
+          className="relative opacity-[0.28]"
+          style={{
+            width: 'min(95vw, 900px)',
+            height: 'min(95vw, 900px)',
+            mixBlendMode: 'screen',
+          }}
+        >
+          <Image
+            src="/logo-black.png"
+            alt=""
+            fill
+            className="object-contain"
+            priority
+            aria-hidden="true"
+          />
         </div>
+      </div>
 
-        {/* Brand name */}
-        <h1 className="text-[clamp(4rem,15vw,12rem)] font-black tracking-[0.2em] text-white leading-none uppercase">
+      {/* Vignette — darkens edges so logo fades into black */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.85)_100%)]" />
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-4 animate-slide-up">
+        {/* Brand name — sits directly over the logo */}
+        <h1 className="text-[clamp(5rem,18vw,14rem)] font-black tracking-[0.25em] text-white leading-none uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)]">
           HAVOK
         </h1>
 
@@ -46,7 +55,7 @@ export default function Hero() {
         </div>
 
         {/* Tagline */}
-        <p className="text-zinc-300 text-lg sm:text-xl font-light tracking-wider max-w-lg mx-auto">
+        <p className="text-zinc-400 text-lg sm:text-xl font-light tracking-wider max-w-lg mx-auto">
           Engineered for athletes who refuse to quit.
         </p>
 
