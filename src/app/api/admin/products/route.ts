@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
   const { data, error } = await supabase
     .from('products')
     .select('*')
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const supabase = await createSupabaseAdminClient()
+    const supabase = createSupabaseAdminClient()
 
     // Check slug uniqueness
     const { data: existing } = await supabase

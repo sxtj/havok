@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: 'Edit Product — Admin' }
 
 export default async function EditProductPage({ params }: PageProps) {
   const { id } = await params
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
 
   const { data: product, error } = await supabase
     .from('products')

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Package, ShoppingBag, DollarSign, Clock } from 'lucide-react'
 
 async function getStats() {
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
 
   const [productsRes, ordersRes, revenueRes, pendingRes] = await Promise.all([
     supabase.from('products').select('id', { count: 'exact', head: true }),
@@ -28,7 +28,7 @@ async function getStats() {
 }
 
 async function getRecentOrders() {
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
   const { data } = await supabase
     .from('orders')
     .select('*')

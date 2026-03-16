@@ -38,7 +38,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
     }
 
-    const supabase = await createSupabaseAdminClient()
+    const supabase = createSupabaseAdminClient()
     const { data, error } = await supabase
       .from('orders')
       .update({

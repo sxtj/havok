@@ -43,7 +43,7 @@ export async function GET(
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
   const { data, error } = await supabase
     .from('products')
     .select('*')
@@ -77,7 +77,7 @@ export async function PUT(
       )
     }
 
-    const supabase = await createSupabaseAdminClient()
+    const supabase = createSupabaseAdminClient()
 
     // Check slug uniqueness (excluding current product)
     if (parsed.data.slug) {
@@ -117,7 +117,7 @@ export async function DELETE(
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
 
   const { error } = await supabase.from('products').delete().eq('id', id)
 

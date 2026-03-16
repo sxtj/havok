@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const status = searchParams.get('status')
 
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
   let query = supabase
     .from('orders')
     .select('*, order_items(*)')

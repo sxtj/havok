@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 async function getOrders(status?: string): Promise<Order[]> {
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
 
   let query = supabase
     .from('orders')

@@ -6,7 +6,7 @@ import { formatPriceDollars } from '@/lib/utils'
 import DeleteProductButton from './DeleteProductButton'
 
 async function getProducts() {
-  const supabase = await createSupabaseAdminClient()
+  const supabase = createSupabaseAdminClient()
   const { data } = await supabase
     .from('products')
     .select('*')
