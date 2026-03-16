@@ -3,31 +3,41 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-800 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-black border-t border-zinc-800">
+
+      {/* Giant HAVOK watermark */}
+      <div className="border-b border-zinc-800 overflow-hidden">
+        <p className="text-[clamp(5rem,18vw,14rem)] font-black tracking-[0.15em] uppercase text-zinc-950 leading-none px-4 select-none whitespace-nowrap">
+          HAVOK
+        </p>
+      </div>
+
+      {/* Main footer content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+
           {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative h-10 w-10">
+          <div className="col-span-2">
+            <div className="flex items-center gap-2.5 mb-5">
+              <div className="relative h-9 w-9">
                 <Image src="/logo.jpg" alt="HAVOK" fill className="object-contain" />
               </div>
-              <span className="font-black text-xl tracking-[0.15em] uppercase text-white">
+              <span className="font-black text-base tracking-[0.2em] uppercase text-white">
                 HAVOK
               </span>
             </div>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-              Premium supplements engineered for athletes who refuse to quit. No fillers.
-              No compromises. Just results.
+            <p className="text-zinc-600 text-sm leading-relaxed max-w-xs">
+              Premium supplements engineered for athletes who refuse to quit.
+              No fillers. No compromises. Just results.
             </p>
           </div>
 
           {/* Shop */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-400 mb-4">
+            <h3 className="text-[10px] font-black tracking-[0.35em] uppercase text-zinc-500 mb-5">
               Shop
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {[
                 { href: '/products', label: 'All Products' },
                 { href: '/products?category=protein', label: 'Protein' },
@@ -38,7 +48,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-500 hover:text-white transition-colors duration-200"
+                    className="text-sm text-zinc-600 hover:text-white transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -49,10 +59,10 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-400 mb-4">
+            <h3 className="text-[10px] font-black tracking-[0.35em] uppercase text-zinc-500 mb-5">
               Support
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {[
                 { href: '#', label: 'Contact Us' },
                 { href: '#', label: 'Shipping Policy' },
@@ -62,7 +72,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-500 hover:text-white transition-colors duration-200"
+                    className="text-sm text-zinc-600 hover:text-white transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -72,11 +82,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-zinc-600">
+        {/* Bottom bar */}
+        <div className="mt-14 pt-6 border-t border-zinc-900 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-[11px] text-zinc-700 tracking-wider">
             &copy; {new Date().getFullYear()} HAVOK. All rights reserved.
           </p>
-          <p className="text-xs text-zinc-600">
+          <p className="text-[11px] text-zinc-700 tracking-wider">
             Built for those who train harder.
           </p>
         </div>

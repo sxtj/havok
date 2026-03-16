@@ -25,6 +25,8 @@ const config: Config = {
         'fade-in': 'fadeIn 0.4s ease-out',
         'slide-in-right': 'slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
         'slide-up': 'slideUp 0.4s ease-out',
+        'marquee': 'marquee 28s linear infinite',
+        'marquee-slow': 'marquee 45s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -38,6 +40,10 @@ const config: Config = {
         slideUp: {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
     },

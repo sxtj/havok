@@ -9,10 +9,13 @@ import { useCart } from '@/context/CartContext'
 
 interface ProductCardProps {
   product: Product
+  index?: number
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { addItem } = useCart()
+  const seqNum = String(index + 1).padStart(2, '0')
+  const isOutOfStock = product.stock_quantity <= 0
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -27,76 +30,89 @@ export default function ProductCard({ product }: ProductCardProps) {
     })
   }
 
-  const isOutOfStock = product.stock_quantity <= 0
-
   return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <div className="relative bg-zinc-950 border border-zinc-800 overflow-hidden transition-all duration-300 hover:border-zinc-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50">
-        {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden bg-zinc-900">
-          {product.image_url ? (
-            <Image
-              src={product.image_url}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            />
-          ) : (
-            <div className="h-full w-full flex items-center justify-center">
-              <Package size={48} className="text-zinc-700" />
-            </div>
-          )}
+    <Link href={`/products/${product.slug}`} className="group block h-full">
+      {/* Portrait card — image fills, info overlays at bottom */}
+      <div className="relative overflow-hidden bg-zinc-950 w-full" style={{ aspectRatio: '3/4' }}>
 
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {isOutOfStock && (
-              <span className="bg-zinc-800 text-zinc-400 text-[10px] font-bold tracking-widest uppercase px-2 py-1">
-                Sold Out
-              </span>
-            )}
+        {/* Image */}
+        {product.image_url ? (
+          <Image
+            src={product.image_url}
+            alt={product.name}
+            fill
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
+            <Package size={48} className="text-zinc-700" />
+          </div>
+        )}
+
+        {/* Permanent dark scrim at bottom for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+
+        {/* Sequence number — top left */}
+        <div className="absolute top-4 left-4 z-10">
+          <span className="font-mono text-[11px] font-bold text-white/20 tracking-widest tabular-nums">
+            {seqNum}
+          </span>
+        </div>
+
+        {/* Badges — top right */}
+        <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-1.5">
+          {product.compare_at_price && product.compare_at_price > product.price && (
+            <span className="text-[9px] font-black tracking-[0.2em] uppercase bg-white text-black px-2 py-0.5">
+              SALE
+            </span>
+          )}
+          {product.category && (
+            <span className="text-[9px] font-bold tracking-[0.15em] uppercase text-white/40 bg-black/40 backdrop-blur-sm px-2 py-0.5">
+              {product.category}
+            </span>
+          )}
+        </div>
+
+        {/* Info overlay — always visible at bottom */}
+        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-5 pt-16">
+          <h3 className="text-sm font-bold tracking-wide uppercase text-white leading-snug mb-2 line-clamp-2">
+            {product.name}
+          </h3>
+
+          <div className="flex items-center gap-2.5">
+            <span className="text-white font-black text-sm">
+              {formatPriceDollars(product.price)}
+            </span>
             {product.compare_at_price && product.compare_at_price > product.price && (
-              <span className="bg-white text-black text-[10px] font-bold tracking-widest uppercase px-2 py-1">
-                Sale
+              <span className="text-zinc-500 text-xs line-through">
+                {formatPriceDollars(product.compare_at_price)}
               </span>
             )}
           </div>
 
-          {/* Add to cart overlay */}
+          {/* Add to cart — expands on hover */}
           {!isOutOfStock && (
-            <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+            <div className="overflow-hidden max-h-0 group-hover:max-h-14 transition-[max-height] duration-300 ease-out">
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-white text-black text-xs font-bold tracking-widest uppercase py-3 hover:bg-zinc-200 active:bg-zinc-300 transition-colors flex items-center justify-center gap-2"
+                className="mt-3 w-full bg-white text-black text-[10px] font-black tracking-[0.25em] uppercase py-3 flex items-center justify-center gap-2 hover:bg-zinc-100 active:bg-zinc-200 transition-colors"
               >
-                <ShoppingCart size={14} />
+                <ShoppingCart size={11} strokeWidth={2.5} />
                 Add to Cart
               </button>
             </div>
           )}
         </div>
 
-        {/* Info */}
-        <div className="p-4">
-          {product.category && (
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500 mb-1">
-              {product.category}
-            </p>
-          )}
-          <h3 className="text-sm font-bold text-white tracking-wide group-hover:text-zinc-300 transition-colors line-clamp-2">
-            {product.name}
-          </h3>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-white font-bold">
-              {formatPriceDollars(product.price)}
+        {/* Out of stock */}
+        {isOutOfStock && (
+          <div className="absolute inset-0 z-20 bg-black/60 flex items-center justify-center">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-zinc-500 border border-zinc-700 px-4 py-2">
+              Sold Out
             </span>
-            {product.compare_at_price && product.compare_at_price > product.price && (
-              <span className="text-zinc-600 text-sm line-through">
-                {formatPriceDollars(product.compare_at_price)}
-              </span>
-            )}
           </div>
-        </div>
+        )}
       </div>
     </Link>
   )
