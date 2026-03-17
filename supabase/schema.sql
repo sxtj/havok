@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS products (
   stock_quantity   INTEGER NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
   is_active        BOOLEAN NOT NULL DEFAULT TRUE,
   nutrition_info   JSONB,
+  shopify_product_id TEXT,
   created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

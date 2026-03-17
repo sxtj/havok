@@ -1,27 +1,19 @@
 'use client'
 
 import { useEffect, useState, Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Check, ArrowRight } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 
 function SuccessContent() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
   const { clearCart } = useCart()
   const [loaded, setLoaded] = useState(false)
-  const sessionId = searchParams.get('session_id')
 
   useEffect(() => {
-    if (!sessionId) {
-      router.replace('/')
-      return
-    }
     clearCart()
     setLoaded(true)
-  }, [sessionId, router, clearCart])
+  }, [clearCart])
 
   if (!loaded) return null
 

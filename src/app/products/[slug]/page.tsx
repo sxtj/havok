@@ -6,6 +6,7 @@ import { Product } from '@/types'
 import { formatPriceDollars } from '@/lib/utils'
 import type { Metadata } from 'next'
 import AddToCartButton from './AddToCartButton'
+import ShopifyBuyButton from '@/components/shopify/BuyButton'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -116,7 +117,11 @@ export default async function ProductPage({ params }: PageProps) {
             </p>
 
             {/* Add to Cart */}
-            <AddToCartButton product={product} />
+            {product.shopify_product_id ? (
+              <ShopifyBuyButton productId={product.shopify_product_id} />
+            ) : (
+              <AddToCartButton product={product} />
+            )}
           </div>
         </div>
 

@@ -10,6 +10,7 @@ export interface Product {
   stock_quantity: number
   is_active: boolean
   nutrition_info: NutritionInfo | null
+  shopify_product_id: string | null
   created_at: string
   updated_at: string
 }

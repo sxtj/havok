@@ -17,6 +17,7 @@ const updateSchema = z.object({
   stock_quantity: z.number().int().min(0).optional(),
   is_active: z.boolean().optional(),
   image_url: z.string().url().nullable().optional(),
+  shopify_product_id: z.string().nullable().optional(),
   nutrition_info: z.record(z.unknown()).nullable().optional(),
 })
 

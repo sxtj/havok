@@ -14,8 +14,6 @@
     "react-dom": "^19.0.0",
     "@supabase/supabase-js": "^2.47.10",
     "@supabase/ssr": "^0.5.2",
-    "stripe": "^17.4.0",
-    "@stripe/stripe-js": "^4.9.0",
     "lucide-react": "^0.468.0",
     "zod": "^3.24.1"
   },

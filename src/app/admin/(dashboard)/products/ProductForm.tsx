@@ -29,6 +29,7 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
     stock_quantity: product?.stock_quantity?.toString() ?? '0',
     is_active: product?.is_active ?? true,
     image_url: product?.image_url ?? '',
+    shopify_product_id: product?.shopify_product_id ?? '',
     nutrition_info: product?.nutrition_info
       ? JSON.stringify(product.nutrition_info, null, 2)
       : JSON.stringify(
@@ -111,6 +112,7 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
         stock_quantity: parseInt(form.stock_quantity, 10),
         is_active: form.is_active,
         image_url: form.image_url || null,
+        shopify_product_id: form.shopify_product_id || null,
         nutrition_info: nutritionInfo,
       }
 
@@ -316,6 +318,23 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
             className="flex-1 bg-zinc-950 border border-zinc-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-white transition-colors"
           />
         </div>
+      </div>
+
+      {/* Shopify Variant ID */}
+      <div>
+        <label className="block text-xs font-bold tracking-widest uppercase text-zinc-400 mb-2">
+          Shopify Variant ID
+        </label>
+        <input
+          type="text"
+          value={form.shopify_product_id}
+          onChange={(e) => setForm((p) => ({ ...p, shopify_product_id: e.target.value }))}
+          className="w-full bg-zinc-950 border border-zinc-700 text-white px-4 py-3 text-sm focus:outline-none focus:border-white transition-colors font-mono"
+          placeholder="7941375688806"
+        />
+        <p className="text-xs text-zinc-600 mt-1">
+          Required for the Buy Button. Find this in Shopify Admin → Products → click product → copy the numeric ID from the URL.
+        </p>
       </div>
 
       {/* Nutrition Info */}
