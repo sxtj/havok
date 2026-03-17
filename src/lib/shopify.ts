@@ -1,14 +1,14 @@
 const STOREFRONT_API_VERSION = '2024-10'
 
 function getEndpoint(): string {
-  const domain = process.env.SHOPIFY_STORE_DOMAIN
-  if (!domain) throw new Error('SHOPIFY_STORE_DOMAIN is not set')
+  const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
+  if (!domain) throw new Error('NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN is not set')
   return `https://${domain}/api/${STOREFRONT_API_VERSION}/graphql.json`
 }
 
 function getToken(): string {
-  const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
-  if (!token) throw new Error('SHOPIFY_STOREFRONT_ACCESS_TOKEN is not set')
+  const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN
+  if (!token) throw new Error('NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN is not set')
   return token
 }
 
