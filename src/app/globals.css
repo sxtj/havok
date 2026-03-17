@@ -34,6 +34,22 @@
   }
 }
 
+/* ── Hero logo animations ───────────────────────────────── */
+@keyframes logo-breathe {
+  0%, 100% { opacity: 0.20; transform: scale(1); }
+  50%       { opacity: 0.32; transform: scale(1.04); }
+}
+
+@keyframes logo-ghost-spin {
+  from { transform: rotate(0deg) scale(1.15); }
+  to   { transform: rotate(-360deg) scale(1.15); }
+}
+
+@keyframes logo-ring-pulse {
+  0%   { transform: scale(0.75); opacity: 0.12; }
+  100% { transform: scale(2.2);  opacity: 0; }
+}
+
 /* ── Film grain overlay ─────────────────────────────────── */
 html::after {
   content: '';

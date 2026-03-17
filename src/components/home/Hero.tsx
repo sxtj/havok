@@ -14,14 +14,44 @@ export default function Hero() {
         }}
       />
 
-      {/* Looming logo — sits behind everything, bleeds to edges */}
+      {/* Ghost logo — large, slow counter-rotation for depth */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
         <div
-          className="relative opacity-[0.28]"
+          style={{
+            position: 'relative',
+            width: 'min(130vw, 1100px)',
+            height: 'min(130vw, 1100px)',
+            mixBlendMode: 'screen',
+            opacity: 0.07,
+            animation: 'logo-ghost-spin 140s linear infinite',
+          }}
+        >
+          <Image src="/logo-black.png" alt="" fill className="object-contain" aria-hidden="true" />
+        </div>
+      </div>
+
+      {/* Pulse ring — expands outward from center */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <div
           style={{
             width: 'min(95vw, 900px)',
             height: 'min(95vw, 900px)',
+            borderRadius: '50%',
+            border: '1px solid rgba(255,255,255,0.06)',
+            animation: 'logo-ring-pulse 6s ease-out infinite',
+          }}
+        />
+      </div>
+
+      {/* Main logo — breathing pulse */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <div
+          style={{
+            position: 'relative',
+            width: 'min(95vw, 900px)',
+            height: 'min(95vw, 900px)',
             mixBlendMode: 'screen',
+            animation: 'logo-breathe 8s ease-in-out infinite',
           }}
         >
           <Image
