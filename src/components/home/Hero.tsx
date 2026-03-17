@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import ParticleField from '@/components/home/ParticleField'
 
 export default function Hero() {
   return (
@@ -14,21 +15,8 @@ export default function Hero() {
         }}
       />
 
-      {/* Ghost logo — large, slow counter-rotation for depth */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <div
-          style={{
-            position: 'relative',
-            width: 'min(130vw, 1100px)',
-            height: 'min(130vw, 1100px)',
-            mixBlendMode: 'screen',
-            opacity: 0.07,
-            animation: 'logo-ghost-spin 140s linear infinite',
-          }}
-        >
-          <Image src="/logo-black.png" alt="" fill className="object-contain" aria-hidden="true" />
-        </div>
-      </div>
+      {/* Particles */}
+      <ParticleField />
 
       {/* Pulse ring — expands outward from center */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
