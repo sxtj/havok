@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
-import { createShopifyCart } from '@/lib/shopify'
+import { createShopifyCart, resolveVariantIds } from '@/lib/shopify'
 import { z } from 'zod'
 
 const lineItemSchema = z.object({
@@ -44,8 +44,9 @@ export async function POST(request: NextRequest) {
     }
 
     const productMap = new Map(dbProducts.map((p) => [p.id, p]))
-    const cartLines: { merchandiseId: string; quantity: number }[] = []
 
+    // Validate all items and collect Shopify product IDs
+    const shopifyProductIds: string[] = []
     for (const item of items) {
       const dbProduct = productMap.get(item.productId)
       if (!dbProduct) {
@@ -66,10 +67,23 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         )
       }
-      cartLines.push({
-        merchandiseId: dbProduct.shopify_product_id as string,
-        quantity: item.quantity,
-      })
+      shopifyProductIds.push(dbProduct.shopify_product_id as string)
+    }
+
+    // Resolve product IDs → variant GIDs (cartCreate requires variant IDs)
+    const variantMap = await resolveVariantIds(shopifyProductIds)
+
+    const cartLines: { merchandiseId: string; quantity: number }[] = []
+    for (const item of items) {
+      const dbProduct = productMap.get(item.productId)!
+      const variantId = variantMap.get(dbProduct.shopify_product_id as string)
+      if (!variantId) {
+        return NextResponse.json(
+          { error: `Could not resolve variant for "${dbProduct.name}"` },
+          { status: 400 }
+        )
+      }
+      cartLines.push({ merchandiseId: variantId, quantity: item.quantity })
     }
 
     const { checkoutUrl } = await createShopifyCart(cartLines)
