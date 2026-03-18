@@ -11,12 +11,12 @@ const updateSchema = z.object({
     .regex(/^[a-z0-9-]+$/)
     .optional(),
   description: z.string().max(2000).nullable().optional(),
-  price: z.number().positive().optional(),
-  compare_at_price: z.number().positive().nullable().optional(),
+  price: z.number().min(0).optional(),
+  compare_at_price: z.number().min(0).nullable().optional(),
   category: z.string().max(100).nullable().optional(),
   stock_quantity: z.number().int().min(0).optional(),
   is_active: z.boolean().optional(),
-  image_url: z.string().url().nullable().optional(),
+  image_url: z.string().nullable().optional(),
   shopify_product_id: z.string().nullable().optional(),
   nutrition_info: z.record(z.unknown()).nullable().optional(),
 })
